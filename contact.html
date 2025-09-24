@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Green Hospitals & Eco-Friendly Health Infrastructure</title>
+    <!-- Importing a simple, clean font from Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Linking our external CSS file -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- HEADER: The top bar that sticks to the top of the page -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>Green Hospitals</h1>
+            </div>
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav class="navigation">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="solutions.html">Solutions</a></li>
+                    <li><a href="stats.html">Stats</a></li>
+                    <li><a href="contact.html" class="active">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO SECTION: The big banner at the top -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h2>Get in Touch</h2>
+            <p>We'd love to hear from you. Reach out to learn more about our sustainable healthcare solutions.</p>
+            <a href="#contact-form" class="cta-button">Contact Us</a>
+        </div>
+    </section>
+
+    <!-- CONTACT INFORMATION SECTION -->
+    <section class="contact-info-section">
+        <div class="container">
+            <h2>Contact Information</h2>
+            <p>Connect with us through any of these channels. Our team is ready to assist you with your sustainable healthcare needs.</p>
+            
+            <div class="contact-info-grid">
+                <div class="contact-info-card">
+                    <div class="info-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                    </div>
+                    <h3>Phone</h3>
+                    <p>+1 (555) 123-4567</p>
+                    <p>Mon-Fri 9am-5pm EST</p>
+                </div>
+                
+                <div class="contact-info-card">
+                    <div class="info-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                    </div>
+                    <h3>Email</h3>
+                    <p>info@greenhospitals.org</p>
+                    <p>support@greenhospitals.org</p>
+                </div>
+                
+                <div class="contact-info-card">
+                    <div class="info-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                    </div>
+                    <h3>Location</h3>
+                    <p>123 Green Way</p>
+                    <p>Eco City, EC 12345</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT FORM SECTION -->
+    <section id="contact-form" class="contact-form-section">
+        <div class="container">
+            <h2>Send Us a Message</h2>
+            <p>Fill out the form below and we'll get back to you as soon as possible.</p>
+            
+            <form id="contact-form">
+                <div class="form-group">
+                    <input type="text" id="name" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="email" placeholder="Your Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" id="phone" placeholder="Your Phone (Optional)">
+                </div>
+                <div class="form-group">
+                    <select id="subject" required>
+                        <option value="">Select a Subject</option>
+                        <option value="general">General Inquiry</option>
+                        <option value="solutions">Solutions Information</option>
+                        <option value="partnership">Partnership Opportunity</option>
+                        <option value="media">Media Inquiry</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <textarea id="message" placeholder="Your Message" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="cta-button">Send Message</button>
+                <div id="form-message" class="form-message">
+                    <div class="message-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                    <p>Thank you! Your message has been successfully sent.</p>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section class="faq-section">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            <p>Find answers to common questions about our sustainable healthcare solutions.</p>
+            
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>What is a green hospital?</h3>
+                    <p>A green hospital is a healthcare facility designed and operated to minimize its environmental impact through sustainable practices in energy use, water consumption, waste management, and building materials.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>How much can a hospital save by going green?</h3>
+                    <p>Hospitals can typically save 30-75% on energy costs, 40-60% on water costs, and reduce waste disposal costs by up to 85% through sustainable practices.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>Do green hospitals compromise patient care?</h3>
+                    <p>No, green hospitals often improve patient outcomes through better air quality, natural lighting, and a healing environment that promotes recovery.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>How long does it take to implement green solutions?</h3>
+                    <p>Implementation timelines vary based on the scope of changes, but most hospitals see significant improvements within 6-18 months of starting their sustainability journey.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>What certifications are available for green hospitals?</h3>
+                    <p>Several certifications exist, including LEED for Healthcare, Green Guide for Health Care, and the Global Green and Healthy Hospitals Agenda.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>Do you offer services internationally?</h3>
+                    <p>Yes, we work with healthcare facilities worldwide to implement sustainable solutions tailored to local conditions and regulations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAP SECTION -->
+    <section class="map-section">
+        <div class="container">
+            <h2>Find Us</h2>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.1234567890123!2d-74.0059413!3d40.7127837!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDQyJzQ2LjEiTiA3NMKwMDAnMjEuNCJX!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER: The bottom of the page -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Green Hospitals Project. All rights reserved.</p>
+            <p>Contact: info@greenhospitals.org | +1 (555) 123-4567</p>
+        </div>
+    </footer>
+
+    <!-- Linking our external JavaScript file -->
+    <script src="script.js"></script>
+</body>
+</html>

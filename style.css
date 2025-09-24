@@ -1,0 +1,2005 @@
+/* 1. BASIC SETUP & RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #fff;
+    overflow-x: hidden; /* Prevents horizontal scroll during animations */
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* 2. HEADER STYLES (Initial load animation - kept as it's at the top) */
+.header {
+    background-color: #fff;
+    box-shadow: 0 2px 20px rgba(46, 125, 50, 0.15);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    animation: slideDown 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    transform: translateY(-100%);
+}
+
+@keyframes slideDown {
+    to {
+        transform: translateY(0);
+    }
+}
+
+.header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo h1 {
+    color: #2e7d32;
+    animation: fadeIn 1s ease-out 0.3s forwards;
+    opacity: 0;
+}
+
+/* Navigation Links with staggered initial animation */
+.navigation ul {
+    display: flex;
+    list-style: none;
+}
+
+.navigation li {
+    margin-left: 1.5rem;
+    animation: fadeInUp 0.6s ease-out forwards;
+    opacity: 0;
+}
+
+.navigation li:nth-child(1) { animation-delay: 0.4s; }
+.navigation li:nth-child(2) { animation-delay: 0.5s; }
+.navigation li:nth-child(3) { animation-delay: 0.6s; }
+.navigation li:nth-child(4) { animation-delay: 0.7s; }
+.navigation li:nth-child(5) { animation-delay: 0.8s; }
+
+.navigation a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    position: relative;
+    padding: 0.5rem 0;
+    transition: all 0.3s ease;
+}
+
+.navigation a:hover {
+    color: #2e7d32;
+}
+
+.navigation a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #2e7d32;
+    transition: width 0.3s ease;
+}
+
+.navigation a:hover::after {
+    width: 100%;
+}
+
+/* 3. HERO SECTION (Now scroll-triggered - starts hidden) */
+.hero-section {
+    background: linear-gradient(135deg, #2e7d32, #4caf50);
+    color: #fff;
+    text-align: center;
+    padding: 150px 0;
+    position: relative;
+    overflow: hidden;
+    background-attachment: fixed;
+    /* Hero starts hidden - animates on scroll */
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.hero-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-section h2 {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    color: #fff; /* Explicitly white */
+    /* Starts off-screen - animates when .visible added to parent */
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s;
+}
+
+.hero-section.visible h2 {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.hero-section p {
+    font-size: 1.3rem;
+    margin-bottom: 2.5rem;
+    color: #fff; /* Explicitly white */
+    /* Starts off-screen - animates when .visible added to parent */
+    opacity: 0;
+    transform: translateX(50px);
+    transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.4s;
+}
+
+.hero-section.visible p {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* 4. ADVANCED BUTTON STYLES (Scroll-triggered for hero button) */
+.cta-button {
+    display: inline-block;
+    background-color: #fff;
+    color: #2e7d32;
+    padding: 15px 40px;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    /* Starts scaled down - animates on scroll */
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s;
+}
+
+.hero-section.visible .cta-button {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.cta-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s ease;
+    z-index: -1;
+}
+
+.cta-button:hover {
+    background-color: #f0fff0;
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 25px rgba(46, 125, 50, 0.3);
+}
+
+.cta-button:hover::before {
+    left: 100%;
+}
+
+.cta-button:active {
+    transform: translateY(1px) scale(0.98);
+}
+
+/* 5. GENERAL SECTION STYLES (All scroll-triggered) */
+section {
+    padding: 100px 0;
+    /* All sections start hidden */
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #2e7d32;
+    position: relative;
+    padding-bottom: 1rem;
+    /* Headings start slightly faded */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease 0.2s;
+}
+
+section.visible h2 {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #2e7d32, #4caf50);
+    transition: width 0.3s ease;
+}
+
+h2:hover::after {
+    width: 120px;
+}
+
+p {
+    max-width: 800px;
+    margin: 0 auto 2rem;
+    text-align: center;
+    font-size: 1.1rem;
+    /* Paragraphs start faded */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease 0.4s;
+}
+
+section.visible p {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 6. ANIMATED TABLE STYLES (Scroll-triggered) */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #fff;
+    /* Tables start hidden */
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+table.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+th, td {
+    padding: 18px;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+    transition: all 0.3s ease;
+}
+
+th {
+    background: linear-gradient(135deg, #2e7d32, #388e3c);
+    color: #fff;
+    font-weight: 600;
+    position: relative;
+    overflow: hidden;
+}
+
+th::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s ease;
+}
+
+th:hover::after {
+    left: 100%;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #e8f5e8 !important;
+    transform: translateX(10px);
+}
+
+/* 7. SOLUTIONS GRID WITH STAGGERED SCROLL ANIMATIONS */
+.solutions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.solution-card {
+    background: linear-gradient(135deg, #ffffff, #f8fff8);
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(46, 125, 50, 0.1);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    /* Cards start rotated and hidden */
+    opacity: 0;
+    transform: translateY(50px) rotate(5deg) scale(0.9);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.solution-card.visible {
+    opacity: 1;
+    transform: translateY(0) rotate(0) scale(1);
+}
+
+/* Staggered delays for cards within the section */
+.solution-card:nth-child(1) { transition-delay: 0.1s; }
+.solution-card:nth-child(2) { transition-delay: 0.2s; }
+.solution-card:nth-child(3) { transition-delay: 0.3s; }
+.solution-card:nth-child(4) { transition-delay: 0.4s; }
+
+.solution-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(46, 125, 50, 0.1), transparent);
+    transform: rotate(45deg);
+    transition: all 0.6s ease;
+}
+
+.solution-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(46, 125, 50, 0.2);
+}
+
+.solution-card:hover::before {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(0);
+}
+
+.solution-card h3 {
+    color: #2e7d32;
+    margin-bottom: 1.2rem;
+    font-size: 1.4rem;
+    position: relative;
+    z-index: 2;
+    /* Card titles animate in */
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.5s ease 0.3s;
+}
+
+.solution-card.visible h3 {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.solution-card p {
+    position: relative;
+    z-index: 2;
+    /* Card paragraphs animate in */
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.5s ease 0.5s;
+}
+
+.solution-card.visible p {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 8. CONTACT FORM STYLES */
+#contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#contact-form input,
+#contact-form textarea {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+#contact-form input:focus,
+#contact-form textarea:focus {
+    outline: none;
+    border-color: #2e7d32;
+    box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
+}
+
+/* CONTACT FORM BUTTON (Scroll-triggered like other elements) */
+#contact-form button {
+    background: linear-gradient(135deg, #2e7d32, #388e3c);
+    color: #fff;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    display: block;
+    margin: 30px auto 0;
+    width: 200px;
+    text-align: center;
+
+    /* Start hidden */
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+#contact-form button.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Shine hover effect for button */
+#contact-form button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+    z-index: -1;
+}
+
+#contact-form button:hover {
+    background: linear-gradient(135deg, #388e3c, #43a047);
+    box-shadow: 0 8px 20px rgba(46, 125, 50, 0.4);
+    transform: translateY(-3px) scale(1.05);
+}
+
+#contact-form button:hover::before {
+    left: 100%;
+}
+
+#contact-form button:active {
+    transform: translateY(1px) scale(0.98);
+}
+
+/* FORM MESSAGE STYLES */
+#form-message {
+    display: none;
+    background-color: #e8f5e9;
+    border-left: 4px solid #2e7d32;
+    color: #2e7d32;
+    border-radius: 6px;
+    padding: 15px 20px;
+    margin-top: 20px;
+    text-align: left;
+    box-shadow: 0 4px 12px rgba(46, 125, 50, 0.15);
+    animation: slideUp 0.5s ease-out;
+}
+
+#form-message.show {
+    display: flex;
+    align-items: center;
+}
+
+.message-icon {
+    width: 24px;
+    height: 24px;
+    background-color: #2e7d32;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.message-icon svg {
+    width: 14px;
+    height: 14px;
+    color: white;
+}
+
+#form-message p {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: left;
+    color: #2e7d32;
+}
+
+/* 9. FOOTER STYLES */
+.footer {
+    background: linear-gradient(135deg, #2e7d32, #1b5e20);
+    color: #fff;
+    text-align: center;
+    padding: 3rem 0;
+    width: 100%;
+
+    /* Hidden state */
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.footer.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.footer .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer p {
+    margin: 0.5rem 0;
+    color: #fff;
+    max-width: 100%;
+    font-size: 1rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    opacity: 1 !important; /* Force opacity to 1 */
+    transform: none !important; /* Remove transform animation */
+}
+
+/* 10. ANIMATION KEYFRAMES (Fallbacks) */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 11. RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+    .header .container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .navigation ul {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .navigation li {
+        margin: 0;
+        animation: none !important;
+        opacity: 1;
+    }
+
+    .hero-section {
+        padding: 100px 0;
+        background-attachment: scroll;
+    }
+
+    .hero-section h2 {
+        font-size: 2rem;
+    }
+
+    .hero-section p {
+        font-size: 1.1rem;
+    }
+
+    .cta-button {
+        transform: none;
+    }
+
+    section {
+        padding: 70px 0;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    .solutions-grid {
+        grid-template-columns: 1fr;
+    }
+
+    th, td {
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+    
+    #contact-form button {
+        width: 100%;
+    }
+    
+    #form-message {
+        padding: 12px 15px;
+    }
+    
+    .message-icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 12px;
+    }
+    
+    .message-icon svg {
+        width: 12px;
+        height: 12px;
+    }
+    
+    #form-message p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *, section, .solution-card, .cta-button, .navigation a, h2, tr, th, #contact-form button, .footer, #form-message {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+    }
+    
+    .footer p {
+        color: #fff !important;
+        opacity: 1 !important;
+    }
+}
+/* Fix for About section alignment */
+.about-section h3 {
+    text-align: center;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    color: #2e7d32;
+    font-size: 1.8rem;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.about-section h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(90deg, #2e7d32, #4caf50);
+}
+
+.about-section p {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 2rem;
+    color: #555;
+    line-height: 1.8;
+}
+
+/* Team member animation fix */
+.team-member {
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(46, 125, 50, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0;
+    transform: translateY(30px);
+    /* Add transition for animation */
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.team-member.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Add staggered animation delays for team members */
+.team-member:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+.team-member:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.team-member:nth-child(3) {
+    transition-delay: 0.3s;
+}
+
+.team-member:nth-child(4) {
+    transition-delay: 0.4s;
+}
+/* Values Section Alignment and Animation Fix */
+.values-section {
+    padding: 100px 0;
+    background-color: #fff;
+}
+
+.values-section h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #2e7d32;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.values-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #2e7d32, #4caf50);
+}
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.value-card {
+    background: linear-gradient(135deg, #ffffff, #f8fff8);
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(46, 125, 50, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0;
+    transform: translateY(30px);
+    /* Add transition for animation */
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.value-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.value-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(46, 125, 50, 0.2);
+}
+
+.value-card h3 {
+    color: #2e7d32;
+    margin-bottom: 1.2rem;
+    font-size: 1.4rem;
+    text-align: center;
+}
+
+.value-card p {
+    text-align: center;
+    max-width: 100%;
+    margin: 0;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* Add staggered animation delays for value cards */
+.value-card:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+.value-card:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.value-card:nth-child(3) {
+    transition-delay: 0.3s;
+}
+
+.value-card:nth-child(4) {
+    transition-delay: 0.4s;
+}
+
+/* Achievements Section Alignment and Animation Fix */
+.achievements-section {
+    padding: 100px 0;
+    background: linear-gradient(135deg, #2e7d32, #4caf50);
+    color: #fff;
+}
+
+.achievements-section h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #fff;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.achievements-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #ffffff, rgba(255, 255, 255, 0.7));
+}
+
+.achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.achievement {
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+    /* Add transition for animation */
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.achievement.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.achievement-number {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #fff;
+    text-align: center;
+}
+
+.achievement-text {
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-align: center;
+    color: #fff;
+}
+
+/* Add staggered animation delays for achievements */
+.achievement:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+.achievement:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.achievement:nth-child(3) {
+    transition-delay: 0.3s;
+}
+
+.achievement:nth-child(4) {
+    transition-delay: 0.4s;
+}
+/* SOLUTIONS PAGE STYLES */
+
+/* Solutions Overview Section */
+.solutions-overview {
+    padding: 80px 0;
+    background-color: #f8fff8;
+}
+
+.solutions-overview h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #2e7d32;
+}
+
+.solutions-overview p {
+    max-width: 800px;
+    margin: 0 auto 1.5rem;
+    text-align: center;
+    color: #555;
+}
+
+/* Solution Detail Sections */
+.solution-detail {
+    padding: 100px 0;
+    background-color: #fff;
+}
+
+.solution-detail.alt-bg {
+    background-color: #f8fff8;
+}
+
+.solution-content {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.solution-content.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.solution-content.reverse {
+    flex-direction: row-reverse;
+}
+
+.solution-text {
+    flex: 2;
+}
+
+.solution-text h2 {
+    text-align: left;
+    margin-bottom: 1.5rem;
+    color: #2e7d32;
+    font-size: 2.2rem;
+}
+
+.solution-text p {
+    text-align: left;
+    margin-bottom: 1.5rem;
+    color: #555;
+    max-width: 100%;
+}
+
+.solution-text ul {
+    list-style: none;
+    margin-bottom: 2rem;
+}
+
+.solution-text li {
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 0.8rem;
+    color: #555;
+}
+
+.solution-text li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 8px;
+    height: 8px;
+    background-color: #2e7d32;
+    border-radius: 50%;
+}
+
+.solution-benefits h3 {
+    color: #2e7d32;
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+}
+
+.solution-benefits p {
+    margin: 0;
+    color: #555;
+    font-weight: 500;
+}
+
+.solution-icon {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon-circle {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, #2e7d32, #4caf50);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 10px 30px rgba(46, 125, 50, 0.3);
+}
+
+.icon-circle svg {
+    color: white;
+}
+
+/* Implementation Process Section */
+.process-section {
+    padding: 100px 0;
+    background-color: #fff;
+}
+
+.process-section h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #2e7d32;
+}
+
+.process-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+}
+
+.process-step {
+    text-align: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, #ffffff, #f8fff8);
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(46, 125, 50, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.process-step.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.process-step:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(46, 125, 50, 0.2);
+}
+
+.step-number {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #2e7d32, #4caf50);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 auto 1.5rem;
+}
+
+.process-step h3 {
+    color: #2e7d32;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.process-step p {
+    margin: 0;
+    color: #555;
+    font-size: 0.95rem;
+}
+
+/* Call to Action Section */
+.cta-section {
+    padding: 100px 0;
+    background: linear-gradient(135deg, #2e7d32, #4caf50);
+    color: #fff;
+    text-align: center;
+}
+
+.cta-section h2 {
+    color: #fff;
+    margin-bottom: 1.5rem;
+}
+
+.cta-section p {
+    max-width: 700px;
+    margin: 0 auto 2.5rem;
+    color: #fff;
+    font-size: 1.1rem;
+}
+
+.cta-section .cta-button {
+    background-color: #fff;
+    color: #2e7d32;
+    padding: 15px 40px;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.cta-section .cta-button:hover {
+    background-color: #f0fff0;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
+}
+
+/* Animation delays for solution sections */
+.solution-detail:nth-child(2) .solution-content {
+    transition-delay: 0.1s;
+}
+
+.solution-detail:nth-child(3) .solution-content {
+    transition-delay: 0.2s;
+}
+
+.solution-detail:nth-child(4) .solution-content {
+    transition-delay: 0.3s;
+}
+
+.solution-detail:nth-child(5) .solution-content {
+    transition-delay: 0.4s;
+}
+
+/* Animation delays for process steps */
+.process-step:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+.process-step:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.process-step:nth-child(3) {
+    transition-delay: 0.3s;
+}
+
+.process-step:nth-child(4) {
+    transition-delay: 0.4s;
+}
+
+.process-step:nth-child(5) {
+    transition-delay: 0.5s;
+}
+
+/* Responsive adjustments for solutions page */
+@media (max-width: 768px) {
+    .solution-content,
+    .solution-content.reverse {
+        flex-direction: column;
+        gap: 2rem;
+    }
+    
+    .solution-text h2 {
+        text-align: center;
+    }
+    
+    .solution-text p {
+        text-align: center;
+    }
+    
+    .solution-text li {
+        text-align: left;
+    }
+    
+    .process-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .icon-circle {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .icon-circle svg {
+        width: 60px;
+        height: 60px;
+    }
+}
+/* STATS PAGE STYLES */
+
+/* Impact Overview Section */
+.impact-overview {
+    padding: 100px 0;
+    background-color: #f8fff8;
+}
+
+.impact-overview h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #2e7d32;
+}
+
+.impact-overview p {
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    text-align: center;
+    color: #555;
+}
+
+.impact-numbers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+}
+
+.impact-number-card {
+    background: #fff;
+    border-radius: 15px;
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(46, 125, 50, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.impact-number-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.impact-number-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(46, 125, 50, 0.2);
+}
+
+.number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #2e7d32;
+    margin-bottom: 0.5rem;
+}
+
+.label {
+    font-size: 1.1rem;
+    color: #555;
+    font-weight: 500;
+}
+
+/* Comparison Section */
+.comparison-section {
+    padding: 100px 0;
+    background-color: #fff;
+}
+
+.comparison-section h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #2e7d32;
+}
+
+.comparison-section p {
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    text-align: center;
+    color: #555;
+}
+
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #fff;
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.comparison-table.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Progress Section */
+.progress-section {
+    padding: 100px 0;
+    background-color: #f8fff8;
+}
+
+.progress-section h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #2e7d32;
+}
+
+.progress-section p {
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    text-align: center;
+    color: #555;
+}
+
+.progress-items {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.progress-item {
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.progress-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.progress-label {
+    font-weight: 600;
+    color: #2e7d32;
+}
+
+.progress-percentage {
+    font-weight: 600;
+    color: #2e7d32;
+}
+
+.progress-bar {
+    height: 10px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #2e7d32, #4caf50);
+    border-radius: 5px;
+    width: 0;
+    transition: width 1.5s ease;
+}
+
+.progress-item.visible .progress-fill {
+    width: var(--progress-width, 0%);
+}
+
+/* Case Studies Section */
+.case-studies-section {
+    padding: 100px 0;
+    background-color: #fff;
+}
+
+.case-studies-section h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #2e7d32;
+}
+
+.case-studies-section p {
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    text-align: center;
+    color: #555;
+}
+
+.case-studies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.case-study {
+    background: linear-gradient(135deg, #ffffff, #f8fff8);
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 8px 25px rgba(46, 125, 50, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.case-study.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.case-study:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(46, 125, 50, 0.2);
+}
+
+.case-study h3 {
+    color: #2e7d32;
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+}
+
+.case-study p {
+    text-align: left;
+    margin-bottom: 1.5rem;
+    color: #555;
+}
+
+.case-results {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.result-item {
+    text-align: center;
+    flex: 1;
+}
+
+.result-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2e7d32;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.result-label {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* Goals Section */
+.goals-section {
+    padding: 100px 0;
+    background-color: #f8fff8;
+}
+
+.goals-section h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #2e7d32;
+}
+
+.goals-section p {
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    text-align: center;
+    color: #555;
+}
+
+.goals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.goal-card {
+    background: #fff;
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(46, 125, 50, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.goal-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.goal-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(46, 125, 50, 0.2);
+}
+
+.goal-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #2e7d32, #4caf50);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+}
+
+.goal-icon svg {
+    color: white;
+}
+
+.goal-card h3 {
+    color: #2e7d32;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.goal-card p {
+    text-align: center;
+    color: #555;
+    margin: 0;
+}
+
+/* Call to Action Section */
+.cta-section {
+    padding: 100px 0;
+    background: linear-gradient(135deg, #2e7d32, #4caf50);
+    color: #fff;
+    text-align: center;
+}
+
+.cta-section h2 {
+    color: #fff;
+    margin-bottom: 1.5rem;
+}
+
+.cta-section p {
+    max-width: 700px;
+    margin: 0 auto 2.5rem;
+    color: #fff;
+    font-size: 1.1rem;
+}
+
+.cta-section .cta-button {
+    background-color: #fff;
+    color: #2e7d32;
+    padding: 15px 40px;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.cta-section .cta-button:hover {
+    background-color: #f0fff0;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
+}
+
+/* Animation delays for stats page elements */
+.impact-number-card:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+.impact-number-card:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.impact-number-card:nth-child(3) {
+    transition-delay: 0.3s;
+}
+
+.impact-number-card:nth-child(4) {
+    transition-delay: 0.4s;
+}
+
+.progress-item:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+.progress-item:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.progress-item:nth-child(3) {
+    transition-delay: 0.3s;
+}
+
+.progress-item:nth-child(4) {
+    transition-delay: 0.4s;
+}
+
+.case-study:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+.case-study:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.case-study:nth-child(3) {
+    transition-delay: 0.3s;
+}
+
+.goal-card:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+.goal-card:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.goal-card:nth-child(3) {
+    transition-delay: 0.3s;
+}
+
+.goal-card:nth-child(4) {
+    transition-delay: 0.4s;
+}
+
+/* Responsive adjustments for stats page */
+@media (max-width: 768px) {
+    .impact-numbers {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .case-studies-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .goals-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .progress-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .case-results {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .number {
+        font-size: 2.5rem;
+    }
+    
+    .label {
+        font-size: 1rem;
+    }
+}
+/* CONTACT PAGE STYLES */
+
+/* Contact Information Section */
+.contact-info-section {
+    padding: 100px 0;
+    background-color: #f8fff8;
+}
+
+.contact-info-section h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #2e7d32;
+}
+
+.contact-info-section p {
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    text-align: center;
+    color: #555;
+}
+
+.contact-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.contact-info-card {
+    background: #fff;
+    border-radius: 15px;
+    padding: 2.5rem;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(46, 125, 50, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.contact-info-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.contact-info-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(46, 125, 50, 0.2);
+}
+
+.info-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #2e7d32, #4caf50);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+}
+
+.info-icon svg {
+    color: white;
+}
+
+.contact-info-card h3 {
+    color: #2e7d32;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.contact-info-card p {
+    margin: 0.5rem 0;
+    color: #555;
+}
+
+/* Contact Form Section */
+.contact-form-section {
+    padding: 100px 0;
+    background-color: #fff;
+}
+
+.contact-form-section h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #2e7d32;
+}
+
+.contact-form-section p {
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    text-align: center;
+    color: #555;
+}
+
+#contact-form {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #fff;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #2e7d32;
+    box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
+}
+
+.form-group select {
+    cursor: pointer;
+}
+
+#contact-form button {
+    background: linear-gradient(135deg, #2e7d32, #388e3c);
+    color: #fff;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    display: block;
+    margin: 30px auto 0;
+    width: 200px;
+    text-align: center;
+
+    /* Start hidden */
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+#contact-form button.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Shine hover effect for button */
+#contact-form button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+    z-index: -1;
+}
+
+#contact-form button:hover {
+    background: linear-gradient(135deg, #388e3c, #43a047);
+    box-shadow: 0 8px 20px rgba(46, 125, 50, 0.4);
+    transform: translateY(-3px) scale(1.05);
+}
+
+#contact-form button:hover::before {
+    left: 100%;
+}
+
+#contact-form button:active {
+    transform: translateY(1px) scale(0.98);
+}
+
+/* FAQ Section */
+.faq-section {
+    padding: 100px 0;
+    background-color: #f8fff8;
+}
+
+.faq-section h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #2e7d32;
+}
+
+.faq-section p {
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    text-align: center;
+    color: #555;
+}
+
+.faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.faq-item {
+    background: #fff;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 8px 25px rgba(46, 125, 50, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.faq-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.faq-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(46, 125, 50, 0.2);
+}
+
+.faq-item h3 {
+    color: #2e7d32;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.faq-item p {
+    margin: 0;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* Map Section */
+.map-section {
+    padding: 100px 0;
+    background-color: #fff;
+}
+
+.map-section h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #2e7d32;
+}
+
+.map-container {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(46, 125, 50, 0.1);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.map-container.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.map-container iframe {
+    width: 100%;
+    height: 450px;
+    border: none;
+    display: block;
+}
+
+/* Animation delays for contact page elements */
+.contact-info-card:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+.contact-info-card:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.contact-info-card:nth-child(3) {
+    transition-delay: 0.3s;
+}
+
+.faq-item:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+.faq-item:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.faq-item:nth-child(3) {
+    transition-delay: 0.3s;
+}
+
+.faq-item:nth-child(4) {
+    transition-delay: 0.4s;
+}
+
+.faq-item:nth-child(5) {
+    transition-delay: 0.5s;
+}
+
+.faq-item:nth-child(6) {
+    transition-delay: 0.6s;
+}
+
+/* Responsive adjustments for contact page */
+@media (max-width: 768px) {
+    .contact-info-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .faq-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .map-container iframe {
+        height: 300px;
+    }
+    
+    #contact-form button {
+        width: 100%;
+    }
+}
